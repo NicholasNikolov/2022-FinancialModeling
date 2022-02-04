@@ -73,22 +73,62 @@ def get_html(link , data_list):
     
     for dt in data_list:
         found_value = html.find('td' , {'data-test' : dt}).text.strip()
+        
+        # Clean -value from dt
+        dt = dt.replace("-value", "")
+
+        
         return_dict[dt] = found_value
 
     return return_dict
 
 def generate_data_dict(data_list , ticker_symbols):
+    print("Running src.dataMethods.generate_data_dict")
+    '''
+    Loops through the ticker_symbols and performs webscrape on Yahoo! Finance
+    to pull data in. The format is as follows:
+        
+        {"Ticker_symbol" : {"data_1" : "value" , "data2" : "value"} ,
+         "Ticker_symbol2" : {"data_1" : "value" , "data2" : "value"}}
+        
+    Parameters:
+    data_list (list) : List of entries to be populated. E.g., Earnings Date,
+            Open and Close, Dividend yield...
+            
+    ticker_symbols (list) : The list of ticker symbols being used.
     
-    return_dict = {}
+    Returns:
+    data_dict (dict) : The dictionary containing the relevant data formatted
+            as described in the summary above.
+    '''
+    data_dict = {}
     for ticker in ticker_symbols:
         # Generate the link using the provided ticker symbol.
         link = generate_link(ticker)
         entry_dict = get_html(link , data_list)
         
         # Populate the return dictionary that contains values for all tickers.
-        return_dict[ticker] = entry_dict
+        data_dict[ticker] = entry_dict
 
-    return return_dict
+    return data_dict
+
+def build_data_upload_query(data_dict):
+    print("Running src.dataMethods.build_data_upload_query")
+    '''
+    Converts the data dictionary into a SQL query that can be applied to the
+    database.
+    
+    Parameters:
+    data_dict (dict) : The output dictionary from generate_data_dict. Formatted
+            as shown in the summary of generate_data_dict.
+            
+    Returns:
+    data_input_query (str) : The SQL query for data upload to the database.
+    '''
+    
+    
+    
+    
 
     
 
