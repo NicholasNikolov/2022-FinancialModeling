@@ -37,10 +37,30 @@ def db_write(query , params):
     params = params
     
     # Execute query and commit changes to the DB.
-    cur.execute(query)
+    cur.execute(query , params)
     db.commit()
     
     # Close the connection to preserve the DB.
     db.close()
     
     
+def db_read(query , params):
+    print("Running src.db_connection.db_read")
+    '''
+    Read data from the SQL DB.
+    '''
+
+    # Open database connection and declare the cursor.
+    db = connect()
+    cur = db.cursor()
+
+    # Declare the query and parameters to be used in query execution.
+    query = query
+    params = params
+
+    # Execute query and commit changes to the DB.
+    cur.execute(query , params)
+    db.commit()
+
+    # Close the connection to preserve the DB.
+    db.close()

@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup
 import json
 import os
 
+import src.db_connection as db
+
 
 
 
@@ -111,6 +113,14 @@ def generate_data_dict(data_list , ticker_symbols):
         data_dict[ticker] = entry_dict
 
     return data_dict
+
+def update_ticker_symbols_db(ticker_symbols):
+    
+    for ticker in ticker_symbols:
+        query = "INSERT IGNORE INTO yh_finance_db.ticker_symbols (symbol_name) VALUES (%s)"
+        params = [ticker]
+        db.db_write(query , params)
+    
 
 def build_data_upload_query(data_dict):
     print("Running src.dataMethods.build_data_upload_query")

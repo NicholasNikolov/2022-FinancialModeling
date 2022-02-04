@@ -21,6 +21,9 @@ def run_data_populater(parameters):
     # Declare the variables.
     data_list = parameters['data_list']
     ticker_symbols = parameters["ticker_symbols"]
+    
+    # Update the DB dict
+    dm.update_ticker_symbols_db(ticker_symbols)
 
     return_dict = dm.generate_data_dict(data_list , ticker_symbols)
     
