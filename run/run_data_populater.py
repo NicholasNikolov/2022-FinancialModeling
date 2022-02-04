@@ -18,12 +18,20 @@ def run_data_populater(parameters):
     Main method for populating extracted data into the DB.
     '''
     
+    # Declare the variables.
     data_list = parameters['data_list']
     ticker_symbols = parameters["ticker_symbols"]
+    return_dict = {}
     
-    link = dm.generate_link("AAPL")
-    entry_dict = dm.get_html(link , data_list)
+   
+    for ticker in ticker_symbols:
+        # Generate the link using the provided ticker symbol.
+        link = dm.generate_link(ticker)
+        entry_dict = dm.get_html(link , data_list)
+        
+        # Populate the return dictionary that contains values for all tickers.
+        return_dict[ticker] = entry_dict
     
-    return entry_dict
+    return return_dict
     
 test = run_data_populater(parameters)

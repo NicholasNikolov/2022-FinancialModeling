@@ -1,7 +1,7 @@
 {
-	"data_test_dict" : ["PREV_CLOSE-value" , "OPEN-value" , "BID-value" , "ASK-value" , 
+	"data_list" : ["PREV_CLOSE-value" , "OPEN-value" , "BID-value" , "ASK-value" , 
 	"DAYS_RANGE-value" , "FIFTY_TWO_WK_RANGE-value" , "TD_VOLUME-value" , "AVERAGE_VOLUME_3MONTH-value" , 
 	"MARKET_CAP-value" , "BETA_5Y-value" , "PE_RATIO-value" , "EPS_RATIO-value" , "EARNINGS_DATE-value" ,
 	"DIVIDEND_AND_YIELD-value" , "EX_DIVIDEND_DATE-value" , "ONE_YEAR_TARGET_PRICE-value"],
-	"ticker_symbols" : ["SPY" , "VOO" , "AAPL" , "INTC" , "NVDA"]
+	"ticker_symbols" : ["AAPL" , "INTC" , "NVDA"]
 }

@@ -77,4 +77,19 @@ def get_html(link , data_list):
 
     return return_dict
 
+def generate_data_dict(data_list , ticker_symbols):
+    
+    return_dict = {}
+    for ticker in ticker_symbols:
+        # Generate the link using the provided ticker symbol.
+        link = generate_link(ticker)
+        entry_dict = get_html(link , data_list)
+        
+        # Populate the return dictionary that contains values for all tickers.
+        return_dict[ticker] = entry_dict
+
+    return return_dict
+
+    
+
         
