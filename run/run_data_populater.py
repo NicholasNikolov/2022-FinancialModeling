@@ -27,7 +27,7 @@ def run_data_populater(parameters):
 
     return_dict = dm.generate_data_dict(data_list , ticker_symbols)
     
-    upload_query = dm.build_data_upload_query(return_dict)
+    upload_query = dm.upload_extracted_data(return_dict)
     
     return return_dict
 

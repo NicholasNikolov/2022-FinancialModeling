@@ -9,6 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
+import time
 
 import src.db_connection as db
 
@@ -116,13 +117,19 @@ def generate_data_dict(data_list , ticker_symbols):
 
 def update_ticker_symbols_db(ticker_symbols):
     
-    for ticker in ticker_symbols:
-        query = "INSERT IGNORE INTO yh_finance_db.ticker_symbols (symbol_name) VALUES (%s)"
-        params = [ticker]
-        db.db_write(query , params)
+    query = "INSERT IGNORE INTO yh_finance_db.ticker_symbols (symbol_name) VALUES (%s)"
+    param_list = ticker_symbols
+    db.batch_write_query(query , param_list)
+    
+    
+    
+    # for ticker in ticker_symbols:
+    #     query = "INSERT IGNORE INTO yh_finance_db.ticker_symbols (symbol_name) VALUES (%s)"
+    #     params = [ticker]
+    #     db.db_write(query , params)
     
 
-def build_data_upload_query(data_dict):
+def upload_extracted_data(data_dict):
     print("Running src.dataMethods.build_data_upload_query")
     '''
     Converts the data dictionary into a SQL query that can be applied to the
@@ -136,6 +143,29 @@ def build_data_upload_query(data_dict):
     data_input_query (str) : The SQL query for data upload to the database.
     '''
     
+    query = "select * from yh_finance_db.ticker_symbols"
+    params = []
+    ticker_result = db.db_read(query , params)
+    
+    query = '''insert into yh_finance_db.financial_data (ticker_symbol_id , DATETIME , PREV_CLOSE,
+    OPEN, BID, ASK, DAYS_RANGE, FIFTY_TWO_WK_RANGE, TD_VOLUME, AVERAGE_VOLUME_3MONTH,
+    MARKET_CAP, BETA_5Y, PE_RATIO, EPS_RATIO, EARNINGS_DATE, DIVIDEND_AND_YIELD,
+    EX_DIVIDEND_DATE, ONE_YEAR_TARGET_PRICE) VALUES (%s , NOW() , %s , %s , %s ,
+                                                     %s , %s , %s , %s , %s ,
+                                                     %s , %s , %s , %s , %s ,
+                                                     %s , %s , %s)'''
+                                                     
+    for ticker in data_dict.keys():
+        
+        params.append()
+                                                     
+    
+    
+    # for ticker in data_dict.keys():
+    #      for col in 
+    
+    
+
     
     
     
