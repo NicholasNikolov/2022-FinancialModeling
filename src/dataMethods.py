@@ -146,28 +146,31 @@ def upload_extracted_data(data_dict):
     query = "select * from yh_finance_db.ticker_symbols"
     params = []
     ticker_result = db.db_read(query , params)
+    ticker_result = {tick['symbol_name'] : tick['ID'] for tick in ticker_result}
     
-    query = '''insert into yh_finance_db.financial_data (ticker_symbol_id , DATETIME , PREV_CLOSE,
+    query = '''insert into yh_finance_db.financial_data (ticker_symbol_id , DATE_TIME , PREV_CLOSE,
     OPEN, BID, ASK, DAYS_RANGE, FIFTY_TWO_WK_RANGE, TD_VOLUME, AVERAGE_VOLUME_3MONTH,
     MARKET_CAP, BETA_5Y, PE_RATIO, EPS_RATIO, EARNINGS_DATE, DIVIDEND_AND_YIELD,
     EX_DIVIDEND_DATE, ONE_YEAR_TARGET_PRICE) VALUES (%s , NOW() , %s , %s , %s ,
                                                      %s , %s , %s , %s , %s ,
                                                      %s , %s , %s , %s , %s ,
                                                      %s , %s , %s)'''
-                                                     
+    
+    param_list = []
     for ticker in data_dict.keys():
-        
-        params.append()
-                                                     
-    
-    
-    # for ticker in data_dict.keys():
-    #      for col in 
-    
-    
-
-    
-    
+        ticker_symbol_id = ticker
+        param_list.append([ticker_symbol_id , data_dict[ticker]['PREV_CLOSE'],
+                       data_dict[ticker]['OPEN'] , data_dict[ticker]['BID'] , 
+                       data_dict[ticker]['ASK'] , data_dict[ticker]['DAYS_RANGE'] , 
+                       data_dict[ticker]['FIFTY_TWO_WK_RANGE'] , 
+                       data_dict[ticker]['TD_VOLUME'] , data_dict[ticker]['AVERAGE_VOLUME_3MONTH'] , 
+                       data_dict[ticker]['MARKET_CAP'] , data_dict[ticker]['BETA_5Y'] ,
+                       data_dict[ticker]['PE_RATIO'] , data_dict[ticker]['EPS_RATIO'] ,
+                       data_dict[ticker]['EARNINGS_DATE'] , data_dict[ticker]['DIVIDEND_AND_YIELD'] , 
+                       data_dict[ticker]['EX_DIVIDEND_DATE'] , data_dict[ticker]['ONE_YEAR_TARGET_PRICE']
+                       ])
+                                      
+    db.batch_write_query(query , param_list)            
     
 
     
