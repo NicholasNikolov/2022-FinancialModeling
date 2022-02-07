@@ -2,7 +2,7 @@
 """
 Created on Tue Feb  1 22:19:48 2022
 
-@author: nikol
+@author: Nicholas Nikolov
 """
 
 import mysql.connector

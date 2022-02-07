@@ -2,7 +2,7 @@
 """
 Created on Tue Feb  1 20:33:38 2022
 
-@author: nikol
+@author: Nicholas Nikolov
 """
 
 import requests
@@ -158,7 +158,7 @@ def upload_extracted_data(data_dict):
     
     param_list = []
     for ticker in data_dict.keys():
-        ticker_symbol_id = ticker
+        ticker_symbol_id = ticker_result[ticker]
         param_list.append([ticker_symbol_id , data_dict[ticker]['PREV_CLOSE'],
                        data_dict[ticker]['OPEN'] , data_dict[ticker]['BID'] , 
                        data_dict[ticker]['ASK'] , data_dict[ticker]['DAYS_RANGE'] , 
