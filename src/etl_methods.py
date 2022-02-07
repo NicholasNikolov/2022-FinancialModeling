@@ -2,7 +2,7 @@
 """
 Created on Tue Feb  1 20:33:38 2022
 
-@author: nikol
+@author: Nicholas Nikolov
 """
 
 import requests
