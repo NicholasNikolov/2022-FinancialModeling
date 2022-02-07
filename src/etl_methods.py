@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Feb  1 20:33:38 2022
-
 @author: Nicholas Nikolov
+
+These methods focus on the webscraping and data prep for loading into the 
+database. This includes initial entry methods like get_parameters.
 """
 
 import requests
