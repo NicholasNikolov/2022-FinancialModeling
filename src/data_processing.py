@@ -27,10 +27,11 @@ def read_format_df():
             from the database.
     '''
     
+    db_connect = db.db_methods()
     # Data query to extract dataset.
     query = "SELECT * FROM yh_finance_db.financial_data;"
     params = []
-    query_result = db.db_read(query , params)
+    query_result = db_connect.db_read(query , params)
     
     # Convert to pandas DataFrame.
     full_df = pd.DataFrame(query_result)

@@ -119,9 +119,10 @@ def generate_data_dict(data_list , ticker_symbols):
 
 def update_ticker_symbols_db(ticker_symbols):
     
+    db_connect = db.db_methods()
     query = "INSERT IGNORE INTO yh_finance_db.ticker_symbols (symbol_name) VALUES (%s)"
     param_list = ticker_symbols
-    db.batch_write_query(query , param_list)
+    db_connect.batch_write_query(query , param_list)
     
     
     
@@ -145,9 +146,10 @@ def upload_extracted_data(data_dict):
     data_input_query (str) : The SQL query for data upload to the database.
     '''
     
+    db_connect = db.db_methods()
     query = "select * from yh_finance_db.ticker_symbols"
     params = []
-    ticker_result = db.db_read(query , params)
+    ticker_result = db_connect.db_read(query , params)
     ticker_result = {tick['symbol_name'] : tick['ID'] for tick in ticker_result}
     
     query = '''insert into yh_finance_db.financial_data (ticker_symbol_id , DATE_TIME , PREV_CLOSE,
@@ -172,7 +174,7 @@ def upload_extracted_data(data_dict):
                        data_dict[ticker]['EX_DIVIDEND_DATE'] , data_dict[ticker]['ONE_YEAR_TARGET_PRICE']
                        ])
                                       
-    db.batch_write_query(query , param_list)            
+    db_connect.batch_write_query(query , param_list)            
     
 
     
