@@ -14,8 +14,7 @@ import os
 import time
 
 import src.db_connection as db
-
-
+import src.zenserp as zs
 
 
 def get_parameters(file_path = 'dct/parameters.json'):
@@ -175,8 +174,6 @@ def upload_extracted_data(data_dict):
                        ])
                                       
     db_connect.batch_write_query(query , param_list)            
-    
 
-    
 
         
