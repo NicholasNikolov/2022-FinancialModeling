@@ -38,3 +38,13 @@ class zenserp_client(object):
         
         result = client.search(params)
         return result
+    
+    def extract_description(self , result):
+        print("Running src.zenserp.extract_descrition")
+        '''
+        '''
+        
+        description_list = [result['news_results'][index]['description'] 
+                            for index in range(len(result['news_results']))]
+        
+        return description_list

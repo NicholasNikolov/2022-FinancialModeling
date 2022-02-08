@@ -24,7 +24,7 @@ class db_methods(object):
     
         
     def db_read(self , query , params):
-        print("Running src.db_connection.db_write()")
+        print("Running src.db_connection.db_read()")
         '''
         Write data to the database. This method only supports single query. The 
         method will open a connection at the start, execute the query, then close
@@ -54,7 +54,7 @@ class db_methods(object):
         cur.execute(query , params)
         query_result = cur.fetchall()
         
-        db.close()
+        #db.close()
         
         return query_result
     
@@ -73,7 +73,7 @@ class db_methods(object):
         cur.execute(query , params)
         db.commit()
         
-        db.close()
+        #db.close()
     
     
     def batch_write_query(self , query , param_list):
@@ -110,7 +110,7 @@ class db_methods(object):
         db.commit() 
         
         # Close connection
-        db.close()
+        #db.close()
         
     
     
