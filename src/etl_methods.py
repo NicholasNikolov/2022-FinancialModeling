@@ -175,11 +175,11 @@ def upload_extracted_data(data_dict):
     ticker_result = db_connect.db_read(query , params)
     ticker_result = {tick['symbol_name'] : tick['ID'] for tick in ticker_result}
     
-    query = '''insert into yh_finance_db.financial_data (ticker_symbol_id , DATE_TIME , PREV_CLOSE,
+    query = '''insert into yh_finance_db.financial_data (ticker_symbol_id , TICKER_SYMBOL , DATE_TIME , PREV_CLOSE,
     OPEN, BID, ASK, DAYS_RANGE, FIFTY_TWO_WK_RANGE, TD_VOLUME, AVERAGE_VOLUME_3MONTH,
     MARKET_CAP, BETA_5Y, PE_RATIO, EPS_RATIO, EARNINGS_DATE, DIVIDEND_AND_YIELD,
     EX_DIVIDEND_DATE, ONE_YEAR_TARGET_PRICE , SENTIMENT_NEG , SENTIMENT_NEU , 
-    SENTIMENT_POS , SENTIMENT_COMPOUND) VALUES (%s , NOW() , %s , %s , %s ,
+    SENTIMENT_POS , SENTIMENT_COMPOUND) VALUES (%s , %s , NOW() , %s , %s , %s ,
                                                      %s , %s , %s , %s , %s ,
                                                      %s , %s , %s , %s , %s ,
                                                      %s , %s , %s , %s , %s ,
@@ -188,7 +188,7 @@ def upload_extracted_data(data_dict):
     param_list = []
     for ticker in data_dict.keys():
         ticker_symbol_id = ticker_result[ticker]
-        param_list.append([ticker_symbol_id , data_dict[ticker]['PREV_CLOSE'],
+        param_list.append([ticker_symbol_id , ticker , data_dict[ticker]['PREV_CLOSE'],
                        data_dict[ticker]['OPEN'] , data_dict[ticker]['BID'] , 
                        data_dict[ticker]['ASK'] , data_dict[ticker]['DAYS_RANGE'] , 
                        data_dict[ticker]['FIFTY_TWO_WK_RANGE'] , 
