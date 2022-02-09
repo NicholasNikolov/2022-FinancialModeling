@@ -31,7 +31,7 @@ class zenserp_client(object):
             ('q', ticker),
             ('location', 'United States'),
             ('search_engine', 'google.com'),
-            ('num' , '5'),
+            ('num' , '20'),
             ('tbm' , 'nws'),
         )
         
@@ -48,3 +48,24 @@ class zenserp_client(object):
                             for index in range(len(result['news_results']))]
         
         return description_list
+    
+    def batch_search(self , ticker_symbols):
+        print("Running src.zenserp.batch_search")
+        '''
+        '''
+        
+        zenserp_return_dict = {}
+        
+        for ticker in ticker_symbols:
+            result = self.search_google(ticker)
+            description_list = self.extract_description(result)
+            zenserp_return_dict[ticker] = description_list
+            
+        return zenserp_return_dict
+    
+
+if __name__ == '__main__':
+    ### TESTING ###
+    client = zenserp_client()
+    result = client.search_google("AAPL")
+    ### TESTING ###

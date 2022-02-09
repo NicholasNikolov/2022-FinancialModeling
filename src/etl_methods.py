@@ -113,6 +113,8 @@ def generate_data_dict(data_list , ticker_symbols):
         
         # Populate the return dictionary that contains values for all tickers.
         data_dict[ticker] = entry_dict
+        
+        time.sleep(5)
 
     return data_dict
 
@@ -129,6 +131,28 @@ def update_ticker_symbols_db(ticker_symbols):
     #     query = "INSERT IGNORE INTO yh_finance_db.ticker_symbols (symbol_name) VALUES (%s)"
     #     params = [ticker]
     #     db.db_write(query , params)
+    
+def generate_zenserp_dict(ticker_symbols):
+    print("Running src.etl_methods.generate_zenserp_dict")
+    '''
+    '''
+    # Declare the Zenserp object
+    zenserp_client = zs.zenserp_client()
+    
+    # Use the Zenserp batch query to extract all ticker symbols being studied.
+    zenserp_dict = zenserp_client.batch_search(ticker_symbols)
+    
+    return zenserp_dict
+
+def merge_data(data_dict , sentiment_dict):
+    print("Running src.etl_methods.merge_data")
+    '''
+    '''
+    
+    for ticker in data_dict.keys():
+        data_dict[ticker].update(sentiment_dict[ticker])
+        
+    return data_dict
     
 
 def upload_extracted_data(data_dict):
@@ -154,10 +178,12 @@ def upload_extracted_data(data_dict):
     query = '''insert into yh_finance_db.financial_data (ticker_symbol_id , DATE_TIME , PREV_CLOSE,
     OPEN, BID, ASK, DAYS_RANGE, FIFTY_TWO_WK_RANGE, TD_VOLUME, AVERAGE_VOLUME_3MONTH,
     MARKET_CAP, BETA_5Y, PE_RATIO, EPS_RATIO, EARNINGS_DATE, DIVIDEND_AND_YIELD,
-    EX_DIVIDEND_DATE, ONE_YEAR_TARGET_PRICE) VALUES (%s , NOW() , %s , %s , %s ,
+    EX_DIVIDEND_DATE, ONE_YEAR_TARGET_PRICE , SENTIMENT_NEG , SENTIMENT_NEU , 
+    SENTIMENT_POS , SENTIMENT_COMPOUND) VALUES (%s , NOW() , %s , %s , %s ,
                                                      %s , %s , %s , %s , %s ,
                                                      %s , %s , %s , %s , %s ,
-                                                     %s , %s , %s)'''
+                                                     %s , %s , %s , %s , %s ,
+                                                     %s , %s)'''
     
     param_list = []
     for ticker in data_dict.keys():
@@ -170,7 +196,9 @@ def upload_extracted_data(data_dict):
                        data_dict[ticker]['MARKET_CAP'] , data_dict[ticker]['BETA_5Y'] ,
                        data_dict[ticker]['PE_RATIO'] , data_dict[ticker]['EPS_RATIO'] ,
                        data_dict[ticker]['EARNINGS_DATE'] , data_dict[ticker]['DIVIDEND_AND_YIELD'] , 
-                       data_dict[ticker]['EX_DIVIDEND_DATE'] , data_dict[ticker]['ONE_YEAR_TARGET_PRICE']
+                       data_dict[ticker]['EX_DIVIDEND_DATE'] , data_dict[ticker]['ONE_YEAR_TARGET_PRICE'] ,
+                       data_dict[ticker]['SENTIMENT_NEG'] , data_dict[ticker]['SENTIMENT_NEU'] , 
+                       data_dict[ticker]['SENTIMENT_POS'] , data_dict[ticker]['SENTIMENT_COMPOUND']
                        ])
                                       
     db_connect.batch_write_query(query , param_list)            

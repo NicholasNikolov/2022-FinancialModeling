@@ -6,7 +6,7 @@ Created on Mon Feb  7 21:46:45 2022
 """
 
 from nltk.sentiment import SentimentIntensityAnalyzer
-import src.zenserp as zs
+
 
 def determine_sentiment(sentence , return_all = False):
     print("Running src.sentiment_analysis.determine_sentiment")
@@ -27,22 +27,53 @@ def determine_sentiment(sentence , return_all = False):
     
     polarity_dict = sia.polarity_scores(sentence)
     
-    neg = polarity_dict['neg']
-    neu = polarity_dict['neu']
-    pos = polarity_dict['pos']
-    compound = polarity_dict['compound']
-    
     if return_all == False:
+        compound = polarity_dict['compound']
         return compound
     else:
-        return neg , neu , pos , compound
+        #return neg , neu , pos , compound
+        return polarity_dict
     
 def determine_overall_sentiment(description_list):
     print("Running src.sentiment_analysis.format_sentiment_dict")
     '''
     '''
     
-    description_list = zs.extract_description()
+    sentiment_scores = [determine_sentiment(description , return_all = True) for description in description_list]
     
-    sentiment_scores = [determine_sentiment(description)
-        for description in description_list]
+    return sentiment_scores
+
+def compute_sentiment_averages(sentiment_dict):
+    print("Running src.sentiment_analysis.compute_sentiment_averages()")
+    '''
+    '''
+    
+    sentiment_averages = {}
+    for ticker in sentiment_dict.keys():
+        full_list = sentiment_dict[ticker]
+        
+        neg_avg = sum(val['neg'] for val in full_list) / len(full_list)
+        neu_avg = sum(val['neu'] for val in full_list) / len(full_list)
+        pos_avg = sum(val['pos'] for val in full_list) / len(full_list)
+        comp_avg = sum(val['compound'] for val in full_list) / len(full_list)
+        
+        sentiment_averages[ticker] = {'SENTIMENT_NEG' : neg_avg}
+        sentiment_averages[ticker]['SENTIMENT_NEU'] = neu_avg
+        sentiment_averages[ticker]['SENTIMENT_POS'] = pos_avg
+        sentiment_averages[ticker]['SENTIMENT_COMPOUND'] = comp_avg
+        
+    return sentiment_averages
+    
+    
+def determine_sentiments_from_dict(zenserp_dict):
+    print("src.sentiment_analysis.determine_sentiments_from_dict")
+    '''
+    '''
+    
+    sentiment_dict = {}
+    
+    for ticker in zenserp_dict.keys():
+        sentiment_scores = determine_overall_sentiment(zenserp_dict[ticker])
+        sentiment_dict[ticker] = sentiment_scores
+    
+    return sentiment_dict
