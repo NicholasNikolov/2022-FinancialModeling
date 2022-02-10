@@ -119,22 +119,46 @@ def generate_data_dict(data_list , ticker_symbols):
     return data_dict
 
 def update_ticker_symbols_db(ticker_symbols):
+    print("Running src.etl_methods.update_ticker_symbols_db")
+    '''
+    When ticker_symbols list is passed, this method will attempt to input the symbols
+    into the ticker_symbols table in the DB. This logs all ticker symbols that have
+    ever been input in the financial_data table. If the ticker already exists
+    in the table then it will not be input. If it does not exist then the new
+    ticker will be input.
     
+    Method uses the batch query to write multiple queries before committing the DB.
+    
+    Parameters:
+    ticker_symbols (list) : The list of ticker symbols that is being used for the
+            web scrape and data creation.
+            
+    Returns:
+    None
+    '''
     db_connect = db.db_methods()
     query = "INSERT IGNORE INTO yh_finance_db.ticker_symbols (symbol_name) VALUES (%s)"
     param_list = ticker_symbols
     db_connect.batch_write_query(query , param_list)
     
     
-    
-    # for ticker in ticker_symbols:
-    #     query = "INSERT IGNORE INTO yh_finance_db.ticker_symbols (symbol_name) VALUES (%s)"
-    #     params = [ticker]
-    #     db.db_write(query , params)
-    
 def generate_zenserp_dict(ticker_symbols):
     print("Running src.etl_methods.generate_zenserp_dict")
     '''
+    Create the zenserp_dict. This dictionary is formatted as follows:
+        
+        {"SYMBOL" : ['sentence1' , 'sentence2']}
+    
+    In the above, SYMBOL represents the ticker symbol (e.g., AAPL) and each
+    sentence is a web-scraped description from the Google search engine. The whole
+    process is done via Zenserp which cleanly organizes the top searches. 
+    
+    Parameters:
+    ticker_symbols (list) : The list of ticker symbols to use for the query.
+    
+    Returns:
+    zenserp_dict (dict) : The Zenserp dictionary formatted as described in the
+            summary above.
     '''
     # Declare the Zenserp object
     zenserp_client = zs.zenserp_client()
@@ -147,6 +171,22 @@ def generate_zenserp_dict(ticker_symbols):
 def merge_data(data_dict , sentiment_dict):
     print("Running src.etl_methods.merge_data")
     '''
+    Merge the data_dict and the Zenserp sentiment_dict into a single unified dictionary.
+    The data_dict contains all data extracted from the webscrape of Yahoo! Finance.
+    The sentiment_dict contains the data extracted from the Google Search news
+    results. Both dictionaries should be merged in order to generate the SQL
+    query and only run one query to the DB.
+    
+    Parameters:
+    data_dict (dict) : The dictionary containing the data extracted from
+            Yahoo! Finance.
+            
+    sentiment_dict (dict) : The dictionary containing the data extracted
+            from the Zenserp Google search.
+            
+    returns:
+        data_dict (dict) : data_dict itself is updated with the sentiment_dict
+                data and returned.
     '''
     
     for ticker in data_dict.keys():

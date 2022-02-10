@@ -6,6 +6,7 @@ Created on Tue Feb  1 22:19:48 2022
 """
 
 import mysql.connector
+from os import getenv
 
 class db_methods(object):
     def __init__(self):
@@ -16,7 +17,7 @@ class db_methods(object):
         '''
         Establish the database connection for data write and read.
         '''
-        connection = mysql.connector.connect(user='root', password='C!@ud1u$',
+        connection = mysql.connector.connect(user='root', password = getenv('DB_PASSWORD'),
                                       host='127.0.0.1',
                                       database='yh_finance_db')
         
