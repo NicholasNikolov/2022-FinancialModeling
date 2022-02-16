@@ -1,0 +1,17 @@
+Starting to log tasks..
+15 FEB 2022
+
+[ ] Debug Spyder debugger. Getting caught up on first line and unable to use debugging. ((BLOCKER))
+
+[ ] Publish code to a cloud-based server so the code can run without daily intervention.
+
+[ ] Implement data cleaning and processing methods.
+
+[ ] Create logging methods and logging DB table.
+
+[ ] Create scoring methods and scoring DB table.
+
+[ ] Train multivariate TS models.
+
+[ ] Create webapp/web interface.
+
