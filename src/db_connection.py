@@ -13,7 +13,7 @@ class db_methods(object):
         self.connection = self.connect()
     
     def connect(self):
-        print("Running src.db_connection.connect()")
+        print("Running src.db_connection.connect")
         '''
         Establish the database connection for data write and read.
         '''
@@ -25,7 +25,7 @@ class db_methods(object):
     
         
     def db_read(self , query , params):
-        print("Running src.db_connection.db_read()")
+        print("Running src.db_connection.db_read")
         '''
         Write data to the database. This method only supports single query. The 
         method will open a connection at the start, execute the query, then close

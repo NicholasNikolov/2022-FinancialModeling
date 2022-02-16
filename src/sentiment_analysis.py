@@ -37,6 +37,14 @@ def determine_sentiment(sentence , return_all = False):
 def determine_overall_sentiment(description_list):
     print("Running src.sentiment_analysis.format_sentiment_dict")
     '''
+    Calculate the sentiment scores from sentences in the description list.
+    
+    Parameters:
+    description_list (list) : List of sentences pulled from the zenserp client.
+    
+    Returns:
+    sentiment_scores (list) : List of sentiment scores for the sentences that
+            were in description_list.
     '''
     
     sentiment_scores = [determine_sentiment(description , return_all = True) for description in description_list]
@@ -46,6 +54,18 @@ def determine_overall_sentiment(description_list):
 def compute_sentiment_averages(sentiment_dict):
     print("Running src.sentiment_analysis.compute_sentiment_averages()")
     '''
+    Compute an average for all independent sentiments collected for each sentence.
+    Recall that the zenserp client is pulling multiple sentiments at once. This
+    method will take the average score of those methods for the negative, neutral, 
+    positive, and compound.
+    
+    Parameters:
+    sentiment_dict (dict) : Dictionary containing the sentiment scores for each
+            ticker symbol. Within those it contains the sentences.
+            
+    Returns:
+    sentiment_averages (dict) : The average sentiment scores for each ticker.
+            Includes the neg, neu, pos, and comp averages.
     '''
     
     sentiment_averages = {}
@@ -68,6 +88,18 @@ def compute_sentiment_averages(sentiment_dict):
 def determine_sentiments_from_dict(zenserp_dict):
     print("src.sentiment_analysis.determine_sentiments_from_dict")
     '''
+    Build out the sentiment dictionary using the sentence dictionary produced
+    by the senzerp client.
+    
+    Parameters:
+    zenserp_dict (dict) : The dictionary produced from running the zenserp client.
+            Contains the ticker symbols as keys and the sentences scraped as
+            the values.
+            
+    Returns:
+    sentiment_dict (dict) : The dictionary containing all sentiments for the
+            tickers and each contained sentence. These are raw scores and not
+            averages.
     '''
     
     sentiment_dict = {}

@@ -12,7 +12,7 @@ class zenserp_client(object):
         self.client = self.establish_zenserp_client()
         
     def establish_zenserp_client(self):
-        print("src.zenserp.establish_zenserp_client()")
+        print("src.zenserp.establish_zenserp_client")
         '''
         Establish the API client with the appropriate API key.
         
@@ -50,7 +50,7 @@ class zenserp_client(object):
             ('q', ticker),
             ('location', 'United States'),
             ('search_engine', 'google.com'),
-            ('num' , '20'),
+            ('num' , '5'),
             ('tbm' , 'nws'),
         )
         
