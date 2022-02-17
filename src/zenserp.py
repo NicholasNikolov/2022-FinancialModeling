@@ -6,6 +6,7 @@ Created on Mon Feb  7 20:35:07 2022
 """
 import zenserp
 import os
+from GoogleNews import GoogleNews
 
 class zenserp_client(object):
     def __init__(self):
@@ -59,7 +60,7 @@ class zenserp_client(object):
         
         return result
     
-    def extract_description(self , result):
+    def extract_description(self , result , ticker):
         print("Running src.zenserp.extract_descrition")
         '''
         Extract the descriptions from the resulting search and format as a list.
@@ -72,8 +73,13 @@ class zenserp_client(object):
                 the short descriptions found when performing a Google search.
         '''
         
-        description_list = [result['news_results'][index]['description'] 
-                            for index in range(len(result['news_results']))]
+        try:
+            description_list = [result['news_results'][index]['description'] 
+                                for index in range(len(result['news_results']))]
+            
+        except TypeError:
+            print("Zenserp client failed. Trying with GoogleNews module.")
+            description_list = self.handle_zenserp_exception(ticker)
         
         return description_list
     
@@ -97,10 +103,32 @@ class zenserp_client(object):
         
         for ticker in ticker_symbols:
             result = self.search_google(ticker)
-            description_list = self.extract_description(result)
+            description_list = self.extract_description(result , ticker)
             zenserp_return_dict[ticker] = description_list
             
         return zenserp_return_dict
+    
+    def handle_zenserp_exception(self , ticker):
+        print("Running src.zenserp.handle_zenserp_exception")
+        '''
+        Zenserp failure of news search is causing issues in data collection.
+        There have been instances of search failure that are the fault of the
+        Zenserp API. I have created a method to handle these exceptions and extract
+        the proper text.
+        
+        Parameters:
+        ticker (str) : The search ticker to be looked up.
+        
+        Returns:
+        description_list (list) : The list of sentence summaries on the news page.
+        '''
+        nws = GoogleNews()
+        nws.search(ticker)
+        
+        description_list = nws.get_texts()[:5]
+        
+        return description_list
+        
     
 
 if __name__ == '__main__':
