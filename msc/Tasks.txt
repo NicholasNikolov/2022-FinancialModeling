@@ -3,6 +3,8 @@ Starting to log tasks..
 
 [ ] Debug Spyder debugger. Getting caught up on first line and unable to use debugging. ((BLOCKER))
 
+[ ] Create redundancy for collection alongside Zenserp. Zenserp client for Google news search stopped working ((BLOCKER))
+
 [ ] Publish code to a cloud-based server so the code can run without daily intervention.
 
 [ ] Implement data cleaning and processing methods.
