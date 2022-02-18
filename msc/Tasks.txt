@@ -2,8 +2,10 @@ Starting to log tasks..
 15 FEB 2022
 
 [ ] Debug Spyder debugger. Getting caught up on first line and unable to use debugging. ((BLOCKER))
+	+ As of 17 FEB 2022, working on PyCharm. Will create a new Conda Environment to test.
 
-[ ] Create redundancy for collection alongside Zenserp. Zenserp client for Google news search stopped working ((BLOCKER))
+[x] Create redundancy for collection alongside Zenserp. Zenserp client for Google news search stopped working ((BLOCKER))
+	+ Completed 16 FEB 2022. Zenserp fixed the API issue but I implemented a catch clause just in case.
 
 [ ] Publish code to a cloud-based server so the code can run without daily intervention.
 

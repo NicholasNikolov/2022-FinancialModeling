@@ -1,0 +1,23 @@
+{
+	"DATE_TIME" : {"current" : "datetime" , "processing_result" : "datetime"},
+	"PREV_CLOSE" : {"current" : "float" , "processing_result" : "float"},
+	"OPEN" : {"current" : "float" , "processing_result" : "float"},
+	"BID" : {"current" : "object" , "processing_result" : "object"},
+	"ASK" : {"current" : "object" , "processing_result" : "object"},
+	"DAYS_RANGE" : {"current" : "object" , "processing_result" : "dual_float"},
+	"FIFTY_TWO_WK_RANGE" : {"current" : "object" , "processing_result" : "dual_float"},
+	"TD_VOLUME" : {"current" : "object" , "processing_result" : "int"},
+	"AVERAGE_VOLUME_3MONTH" : {"current" : "object" , "processing_result" : "int"},
+	"MARKET_CAP" : {"current" : "object" , "processing_result" : "int"},
+	"BETA_5Y" : {"current" : "float" , "processing_result" : "float"},
+	"PE_RATIO" : {"current" : "float" , "processing_result" : "float"},
+	"EPS_RATIO" : { "current" : "float" , "processing_result" : "float"},
+	"EARNINGS_DATE" : {"current" : "object" , "processing_result" : "dual_datetime"},
+	"DIVIDEND_AND_YIELD" : {"current" : "object" , "processing_result" : "dual_float"},
+	"EX_DIVIDEND_DATE" : {"current" : "datetime" , "processing_result" : "datetime"},
+	"ONE_YEAR_TARGET_PRICES" : {"current" : "float" , "processing_result" : "float"},
+	"SENTIMENT_NEG" : {"current" : "float" , "processing_result" : "float"},
+	"SENTIMENT_NEU" : {"current" : "float" , "processing_result" : "float"},
+	"SENTIMENT_POS" : {"current" : "float" , "processing_result" : "float"},
+	"SENTIMENT_COMPOUND" : {"current" : "float" , "processing_result" : "float"}
+}
