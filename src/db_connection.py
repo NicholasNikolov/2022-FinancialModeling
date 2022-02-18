@@ -8,23 +8,23 @@ Created on Tue Feb  1 22:19:48 2022
 import mysql.connector
 from os import getenv
 
-class db_methods(object):
+
+class DBMethods(object):
     def __init__(self):
         self.connection = self.connect()
-    
+
     def connect(self):
         print("Running src.db_connection.connect")
         '''
         Establish the database connection for data write and read.
         '''
-        connection = mysql.connector.connect(user='root', password = getenv('DB_PASSWORD'),
-                                      host='127.0.0.1',
-                                      database='yh_finance_db')
-        
+        connection = mysql.connector.connect(user='root', password=getenv('DB_PASSWORD'),
+                                             host='127.0.0.1',
+                                             database='yh_finance_db')
+
         return connection
-    
-        
-    def db_read(self , query , params):
+
+    def db_read(self, query, params):
         print("Running src.db_connection.db_read")
         '''
         Write data to the database. This method only supports single query. The 
@@ -42,42 +42,40 @@ class db_methods(object):
         Returns:
         None
         '''
-        
+
         # Open database connection and declare the cursor.
         db = self.connection
         cur = db.cursor(dictionary=True)
-        
+
         # Declare the query and parameters to be used in query execution.
         query = query
         params = params
-        
+
         # Execute query and extract the query select results.
-        cur.execute(query , params)
+        cur.execute(query, params)
         query_result = cur.fetchall()
-        
-        #db.close()
-        
+
+        # db.close()
+
         return query_result
-    
-    
-    def db_write(self , query , params):
+
+    def db_write(self, query, params):
         # Open database connection and declare the cursor.
-        #db = self.connect()
+        # db = self.connect()
         db = self.connection
         cur = db.cursor()
-        
+
         # Declare the query and parameters to be used in query execution.
         query = query
         params = params
-        
+
         # Execute query and commit changes to the DB.
-        cur.execute(query , params)
+        cur.execute(query, params)
         db.commit()
-        
-        #db.close()
-    
-    
-    def batch_write_query(self , query , param_list):
+
+        # db.close()
+
+    def batch_write_query(self, query, param_list):
         print("Running src.db_connection.batch_query")
         '''
         Run a series of queries from a list. This will open a connection before running
@@ -91,28 +89,24 @@ class db_methods(object):
         Returns:
         None
         '''
-        
+
         # If a single parameter is passed, clean up for the user. This allows users
         # to pass parameter lists with string entries rather than list of lists.
         # This check will auto format for the user. Note that params must be in
         # the form of a list even if only a single entry.
         if type(param_list[0]) == str:
             param_list = [[entry] for entry in param_list]
-        
-        #db = self.connect()
+
+        # db = self.connect()
         db = self.connection
         cur = db.cursor()
-        
+
         for params in param_list:
             # Execute the query.
-            cur.execute(query , params)
-        
+            cur.execute(query, params)
+
         # Commit DB changes.
-        db.commit() 
-        
+        db.commit()
+
         # Close connection
-        #db.close()
-        
-    
-    
-    
+        # db.close()
