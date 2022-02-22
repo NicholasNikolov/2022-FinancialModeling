@@ -136,7 +136,7 @@ def update_ticker_symbols_db(ticker_symbols):
     Returns:
     None
     '''
-    db_connect = db.db_methods()
+    db_connect = db.DBMethods()
     query = "INSERT IGNORE INTO yh_finance_db.ticker_symbols (symbol_name) VALUES (%s)"
     param_list = ticker_symbols
     db_connect.batch_write_query(query , param_list)
@@ -209,7 +209,7 @@ def upload_extracted_data(data_dict):
     data_input_query (str) : The SQL query for data upload to the database.
     '''
     
-    db_connect = db.db_methods()
+    db_connect = db.DBMethods()
     query = "select * from yh_finance_db.ticker_symbols"
     params = []
     ticker_result = db_connect.db_read(query , params)
