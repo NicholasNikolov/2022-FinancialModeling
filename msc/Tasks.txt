@@ -7,6 +7,9 @@ Starting to log tasks..
 [x] Create redundancy for collection alongside Zenserp. Zenserp client for Google news search stopped working ((BLOCKER))
 	+ Completed 16 FEB 2022. Zenserp fixed the API issue but I implemented a catch clause just in case.
 
+[ ] Create trend analytics method. Trend score, average searches, etc.
+	+ Code finalized on 23 FEB 2022. Need to integrate with the DB.
+
 [ ] Publish code to a cloud-based server so the code can run without daily intervention.
 
 [ ] Implement data cleaning and processing methods.
