@@ -1,0 +1,3 @@
+GoogleNews
+zenserp
+pip install mysql-connector-python
