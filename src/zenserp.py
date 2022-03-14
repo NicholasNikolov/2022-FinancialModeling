@@ -7,6 +7,7 @@ Created on Mon Feb  7 20:35:07 2022
 import zenserp
 import os
 from GoogleNews import GoogleNews
+import time
 
 class zenserp_client(object):
     def __init__(self):
@@ -55,8 +56,22 @@ class zenserp_client(object):
             ('tbm' , 'nws'),
         )
         
-        
+        time.sleep(25)
         result = client.search(params)
+        
+        # March change to Google search caused some search queries to fail. This
+        # try except clause will reattempt the search five times before giving up.
+        # Hopefully this allows me to gather the necessary data more reliably.
+        try:
+            result['news_results']
+        except:
+            reattempt_count = 1
+            
+            while reattempt_count <= 5 and 'news_results' not in result.keys():
+                print("Zenserp Search Failed. Trying again. Attempt " + str(reattempt_count))
+                time.sleep(10)
+                result = client.search(params)
+                reattempt_count += 1
         
         return result
     
@@ -122,6 +137,7 @@ class zenserp_client(object):
         Returns:
         description_list (list) : The list of sentence summaries on the news page.
         '''
+        time.sleep(25)
         nws = GoogleNews()
         nws.search(ticker)
         
