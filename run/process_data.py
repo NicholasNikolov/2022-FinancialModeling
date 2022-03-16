@@ -20,7 +20,7 @@ def process_data(ticker: str):
     '''
 
     df = prc.read_format_df(ticker)
-    df = prc.format_timestamp(df)
+    df = prc.format_timestamp(df , 'DATE_TIME')
 
     return df
 

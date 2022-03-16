@@ -71,6 +71,7 @@ def get_html(link , data_list):
             and the relevant extracted data as the value. E.g., "OPEN-value" : 174
     '''
     
+    time.sleep(5)
     return_dict = {}
     NewResponse = requests.get(link)
     html = BeautifulSoup(NewResponse.text,'html.parser')

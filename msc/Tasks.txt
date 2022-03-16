@@ -1,8 +1,11 @@
 Starting to log tasks..
 15 FEB 2022
 
-[ ] Debug Spyder debugger. Getting caught up on first line and unable to use debugging. ((BLOCKER))
+[x] Debug Spyder debugger. Getting caught up on first line and unable to use debugging. ((BLOCKER))
 	+ As of 17 FEB 2022, working on PyCharm. Will create a new Conda Environment to test.
+	+ Confirmed working on 11 MAR 2022. No clue what happened.
+		= Issue was qtconsole version. Had similar issue on a different device. Fixed.
+	+ Completed 15 MAR 2022.
 	+ As of 02 MAR 2022, working on a separate computer. Unsure why this issue arose.
 
 [x] Create redundancy for collection alongside Zenserp. Zenserp client for Google news search stopped working ((BLOCKER))
@@ -17,6 +20,7 @@ Starting to log tasks..
 	+ 03 MAR 2022. Considering AWS Lightsail. Either containerize the app or, if possible, build it in Cloudsail.
 
 [ ] Implement data cleaning and processing methods.
+	+ Started 15 MAR 2022
 
 [ ] Create logging methods and logging DB table.
 

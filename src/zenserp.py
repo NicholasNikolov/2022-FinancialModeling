@@ -7,6 +7,7 @@ Created on Mon Feb  7 20:35:07 2022
 import zenserp
 import os
 from GoogleNews import GoogleNews
+import time
 
 class zenserp_client(object):
     def __init__(self):
@@ -55,13 +56,28 @@ class zenserp_client(object):
             ('tbm' , 'nws'),
         )
         
-        
+        time.sleep(25)
         result = client.search(params)
+        
+        # March change to Google search caused some search queries to fail. This
+        # try except clause will reattempt the search five times before giving up.
+        # Hopefully this allows me to gather the necessary data more reliably.
+        try:
+            result['news_results']
+        except KeyError:
+            reattempt_count = 1
+            
+            while reattempt_count <= 5 and 'news_results' not in result.keys():
+                print("Zenserp Search Failed. Trying again. Attempt " + str(reattempt_count))
+                
+                time.sleep(10)
+                result = client.search(params)
+                reattempt_count += 1
         
         return result
     
     def extract_description(self , result , ticker):
-        print("Running src.zenserp.extract_descrition")
+        print("Running src.zenserp.extract_description")
         '''
         Extract the descriptions from the resulting search and format as a list.
         
@@ -77,7 +93,7 @@ class zenserp_client(object):
             description_list = [result['news_results'][index]['description'] 
                                 for index in range(len(result['news_results']))]
             
-        except TypeError:
+        except:
             print("Zenserp client failed. Trying with GoogleNews module.")
             description_list = self.handle_zenserp_exception(ticker)
         
@@ -122,10 +138,39 @@ class zenserp_client(object):
         Returns:
         description_list (list) : The list of sentence summaries on the news page.
         '''
+        time.sleep(25)
         nws = GoogleNews()
         nws.search(ticker)
         
         description_list = nws.get_texts()[:5]
+        
+        # !!! Temporary solution. For some reason the search result is returning
+        # as empty.
+        # !!! Need to create proper checks for empty lists to search for the result
+        # again. Unclear why it's failing for zenserp AND GoogleNews().
+        # I think there was a change in the google search engine because both
+        # zenserp and GoogleNews() are having issue. Seems that some queries
+        # fail to extract the actual top news articles. It's unclear what
+        # causes this to happen. Might explore exceptions that try a different
+        # search engine.
+        # The solution is very strange. The search might fail the first and 
+        # second time but then may succeed the third time.. 
+        try:
+            5/len(description_list)
+        except:
+            nws.search(ticker)
+            
+            description_list = nws.get_texts()[:5]
+
+            nws.search(ticker)
+            
+            description_list = nws.get_texts()[:5]
+
+            nws.search(ticker)
+            
+            description_list = nws.get_texts()[:5]
+
+
         
         return description_list
         
