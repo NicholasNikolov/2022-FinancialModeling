@@ -20,9 +20,10 @@ import numpy as np
 #%%
 pytrends = TrendReq(hl='en-US', tz=360)
 
-kw_list = ["AAPL"]  # list of keywords to get data
+kw_list = ["tsla"]  # list of keywords to get data
 
 pytrends.build_payload(kw_list, cat= 784, geo = '' , timeframe='now 7-d')
+#pytrends.build_payload(kw_list, geo = '' , timeframe='now 7-d')
 
 # 1 Interest over Time
 data = pytrends.interest_over_time()

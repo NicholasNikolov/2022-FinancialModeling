@@ -64,11 +64,12 @@ class zenserp_client(object):
         # Hopefully this allows me to gather the necessary data more reliably.
         try:
             result['news_results']
-        except:
+        except KeyError:
             reattempt_count = 1
             
             while reattempt_count <= 5 and 'news_results' not in result.keys():
                 print("Zenserp Search Failed. Trying again. Attempt " + str(reattempt_count))
+                
                 time.sleep(10)
                 result = client.search(params)
                 reattempt_count += 1
