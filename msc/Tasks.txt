@@ -6,14 +6,18 @@ Starting to log tasks..
 	+ Confirmed working on 11 MAR 2022. No clue what happened.
 		= Issue was qtconsole version. Had similar issue on a different device. Fixed.
 	+ Completed 15 MAR 2022.
+	+ As of 02 MAR 2022, working on a separate computer. Unsure why this issue arose.
 
 [x] Create redundancy for collection alongside Zenserp. Zenserp client for Google news search stopped working ((BLOCKER))
 	+ Completed 16 FEB 2022. Zenserp fixed the API issue but I implemented a catch clause just in case.
+
+[ ] Update the .yml. Some dependency conflicts present.
 
 [ ] Create trend analytics method. Trend score, average searches, etc.
 	+ Code finalized on 23 FEB 2022. Need to integrate with the DB.
 
 [ ] Publish code to a cloud-based server so the code can run without daily intervention.
+	+ 03 MAR 2022. Considering AWS Lightsail. Either containerize the app or, if possible, build it in Cloudsail.
 
 [ ] Implement data cleaning and processing methods.
 	+ Started 15 MAR 2022
