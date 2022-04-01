@@ -18,7 +18,7 @@ import src.zenserp as zs
 
 
 def get_parameters(file_path = 'dct/parameters.json'):
-    print("Running get_parameters")
+    print("Running src.etl_methods.get_parameters")
     '''
     Extracts the parameters used throughout the data population code.
     
@@ -36,7 +36,7 @@ def get_parameters(file_path = 'dct/parameters.json'):
     return parameters
 
 def generate_link(ticker_symbol):
-    print("Running generate_link")
+    print("Running src.etl_methods.generate_link")
     '''
     Generate a link based on the provided ticker symbol. This link will be used
     to access the Yahoo! Finance website and extract relevant data. Assumption
@@ -54,7 +54,7 @@ def generate_link(ticker_symbol):
     return link
 
 def get_html(link , data_list):
-    print("Running get_html")
+    print("Running src.etl_methods.get_html")
     '''
     Get the HTML and perform initial processing on it.
     

@@ -10,6 +10,13 @@ This includes interpolating nulls, determining datatypes, formatting strings, et
 import src.db_connection as db
 import pandas as pd
 
+# =============================================================================
+# WARNING SUPPRESSION
+# =============================================================================
+pd.options.mode.chained_assignment = None
+# =============================================================================
+# WARNING SUPPRESSION
+# =============================================================================
 
 def read_format_df(ticker: str):
     print("Running src.data_processing.read_format_df()")
@@ -125,21 +132,74 @@ def process_TD_VOLUME(df):
     '''
     '''
     
+    # Remove the commas to allow for conversion to int.
     df.TD_VOLUME = df.TD_VOLUME.str.replace(',' , '')
+    
+    # Convert the column to int.
+    df.TD_VOLUME = df.TD_VOLUME.astype(int)
     
     return df
 
 def process_AVERAGE_VOLUME_3MONTH(df):
     print("Running src.data_processing.process_TD_VOLUME")
     '''
+    Process AVERAGE_VOLUMNE_3MONTH. Entries in this feature column contain commas.
+    The method replaces these commas to allow for conversion to int. Then the
+    column is converted to int.
+    
+    Parameters:
+    df (DataFrame) : The DataFrame to be processed.
+    
+    Returns:
+    df (DataFrame) : The processed DataFrame.
     '''
     
+    # Remove the commas to allow for conversion to int.
     df.AVERAGE_VOLUME_3MONTH = df.AVERAGE_VOLUME_3MONTH.str.replace(',' , '')
+    
+    # Convert the column to int.
+    df.AVERAGE_VOLUME_3MONTH = df.AVERAGE_VOLUME_3MONTH.astype(int)
     
     return df
 
 
-
+def process_MARKET_CAP(df):
+    print("src.data_processing.process_MARKET_CAP")
+    '''
+    Process the MARKET_CAP feature. This data is presented as a string with M,
+    B, or T appended at the end for million, billion, or trillion.
+    Because there is a possibility for there to be a mix of entries, I loop 
+    through the column and make updates on an entry-by-entry basis, rather than
+    updating the full column at once.
+    
+    Each entry has the appended letter removed, is converted to a float, and is
+    multiplied by the correct multiple. E.g., 1000000 for million (or M).
+    
+    Parameters:
+    df (DataFrame) : The dataframe that will be processed.
+    
+    Returns:
+    df (DataFrame) : The df with MARKET_CAP processed and dtype converted to float.
+    '''
+    
+    # Convert the text format into float-compatible format.
+    for index in range(len(df.MARKET_CAP)):
+        if "T" in df.MARKET_CAP[index]:
+            entry_float = float(df.MARKET_CAP[index].replace("T",""))
+            df.MARKET_CAP[index] = entry_float * 1000000000000
+            
+        elif "B" in df.MARKET_CAP[index]:
+            entry_float = float(df.MARKET_CAP[index].replace("B",""))
+            df.MARKET_CAP[index] = entry_float * 1000000000
+            
+        elif "M" in df.MARKET_CAP[index]:
+            entry_float = float(df.MARKET_CAP[index].replace("M",""))
+            df.MARKET_CAP[index] = entry_float * 1000000
+            
+    # Convert the whole column into float64.
+    df.MARKET_CAP = df.MARKET_CAP.astype(float)
+    
+    return df
 
 
 def format_timestamp(df, time_stamp_column):
@@ -153,8 +213,11 @@ def format_timestamp(df, time_stamp_column):
 
 
 
-
-
+if __name__ == '__main__':
+    
+    df = read_format_df('AAPL')
+    
+    df = prepare_data(df)
 
 
 
