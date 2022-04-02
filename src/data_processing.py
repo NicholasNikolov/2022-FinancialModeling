@@ -202,6 +202,35 @@ def process_MARKET_CAP(df):
     return df
 
 
+def process_float_stats(df):
+    print("Running src.data_processing.process_float_stats")
+    '''
+    Process all statistics that are already formatted as floats but need the
+    column type updated.
+    
+    Parameters:
+    df (DataFrame) : The DataFrame containing the relevant features.
+    
+    Returns:
+    df (DataFrame) : The DataFrame with the relevant features converted to floats.
+    
+    Future Work:
+    Determine these dtypes in advance. Naturally some columns must read in as
+    objects (unless the data processing occurs in SQL within the DB which is
+             more proper but will require more time)
+    '''
+    
+    df.BETA_5Y = df.BETA_5Y.astype(float)
+    df.PE_RATIO = df.PE_RATIO.astype(float)
+    df.EPS_RATIO = df.EPS_RATIO.astype(float)
+    df.ONE_YEAR_TARGET_PRICE = df.ONE_YEAR_TARGET_PRICE.astype(float)
+    df.SENTIMENT_NEG = df.SENTIMENT_NEG.astype(float)
+    df.SENTIMENT_NEU = df.SENTIMENT_NEU.astype(float)
+    df.SENTIMENT_POS = df.SENTIMENT_POS.astype(float)
+    df.SENTIMENT_COMPOUND = df.SENTIMENT_COMPOUND.astype(float)
+    
+    return df
+
 def format_timestamp(df, time_stamp_column):
     print("Running src.data_processing.format_timestamp")
     '''

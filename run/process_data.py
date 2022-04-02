@@ -34,6 +34,8 @@ def process_data(ticker: str):
     df = prc.process_AVERAGE_VOLUME_3MONTH(df)
     
     df = prc.process_MARKET_CAP(df)
+    
+    df = prc.process_float_stats(df)
 
 
     return df
@@ -41,6 +43,6 @@ def process_data(ticker: str):
 
 if __name__ == '__main__':
     ### TESTING ###
-    df = process_data("AAPL")
+    df = process_data("INTC")
     df.head()
     ### TESTING ###
